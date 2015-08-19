@@ -43,7 +43,14 @@ class PythonOrgSearch(unittest.TestCase):
 
         time.sleep(2)
 
-        #assert "No results found." not in driver.page_source
+    def test_open_boxes(self):
+        boxes = { "bullbox", "death_chest", "cowchest2015" }
+
+        for box in boxes:
+            process_box = True
+            while process_box == True:
+                csrf_token = self.get_new_csrf_token()
+                process_box = self.open_box(box, csrf_token)
 
 
     def get_new_csrf_token(self):
