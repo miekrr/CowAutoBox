@@ -2,6 +2,7 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+import json
 
 TWITCH_USER = "user"
 TWITCH_PASS = "pass"
@@ -14,7 +15,8 @@ class PythonOrgSearch(unittest.TestCase):
         self.do_twitch_login_for_cowsep()
 
     def get_status(self, json_data):
-        data = json.loads(json_data)
+        print(json_data)
+        data = json.loads(json_data, strict=False)
         if data['status'] != 'fail':
             return True
         return False
