@@ -11,6 +11,13 @@ class PythonOrgSearch(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
+        self.do_twitch_login_for_cowsep()
+
+    def get_status(self, json_data):
+        data = json.loads(json_data)
+        if data['status'] != 'fail':
+            return True
+        return False
 
     def open_box(self, item_name, csrf_token):
         link = "http://cowsep.com/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
@@ -33,11 +40,9 @@ class PythonOrgSearch(unittest.TestCase):
             time.sleep(2)
             driver.get("http://www.cowsep.com")
             #driver.refresh()
-
-    def test_search_in_python_org(self):
+    def do_twitch_login_for_cowsep(self):
         driver = self.driver
         driver.get(COWSEP_WEBSITE)
-        #self.assertIn("Python", driver.title)
 
         login_link = driver.find_element_by_css_selector("a[href='login.php']")
         login_link.click()
