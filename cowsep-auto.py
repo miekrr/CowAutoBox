@@ -12,6 +12,14 @@ class PythonOrgSearch(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
 
+    def open_box(self, item_name, csrf_token):
+        link = "http://cowsep.com/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
+        print(link)
+        driver.get(link)
+        body = driver.find_element_by_xpath("/html/body").text
+
+        return self.get_status(body)
+
     def open_boxes(self):
         driver = self.driver
         item_name = "bullbox"
