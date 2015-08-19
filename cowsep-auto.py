@@ -60,6 +60,14 @@ class PythonOrgSearch(unittest.TestCase):
         #assert "No results found." not in driver.page_source
 
 
+    def get_new_csrf_token(self):
+        driver = self.driver
+        driver.get("http://www.cowsep.com")
+        time.sleep(1)
+        elem = driver.find_element_by_name("csrf-token")
+        csrf_token = elem.get_attribute("content")
+        return csrf_token
+
     def tearDown(self):
         #self.driver.close()
         print("bye!")
