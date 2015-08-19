@@ -27,19 +27,6 @@ class PythonOrgSearch(unittest.TestCase):
 
         return self.get_status(body)
 
-    def open_boxes(self):
-        driver = self.driver
-        item_name = "bullbox"
-        while True:
-            elem = driver.find_element_by_name("csrf-token")
-            csrf_token = elem.get_attribute("content")
-            link = COWSEP_WEBSITE + "/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
-            print(link)
-            driver.get(link)
-            body = driver.find_element_by_xpath("/html/body/")
-            time.sleep(2)
-            driver.get("http://www.cowsep.com")
-            #driver.refresh()
     def do_twitch_login_for_cowsep(self):
         driver = self.driver
         driver.get(COWSEP_WEBSITE)
@@ -55,7 +42,6 @@ class PythonOrgSearch(unittest.TestCase):
         pass_box.send_keys(Keys.RETURN)
 
         time.sleep(2)
-        self.open_boxes()
 
         #assert "No results found." not in driver.page_source
 
