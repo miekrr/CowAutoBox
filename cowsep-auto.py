@@ -22,7 +22,7 @@ class PythonOrgSearch(unittest.TestCase):
         return False
 
     def open_box(self, item_name, csrf_token):
-        link = "http://cowsep.com/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
+        link = COWSEP_WEBSITE + "/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
         print(link)
         self.driver.get(link)
         body = self.driver.find_element_by_xpath("/html/body").text
@@ -57,7 +57,7 @@ class PythonOrgSearch(unittest.TestCase):
 
     def get_new_csrf_token(self):
         driver = self.driver
-        driver.get("http://www.cowsep.com")
+        driver.get(COWSEP_WEBSITE)
         time.sleep(1)
         elem = driver.find_element_by_name("csrf-token")
         csrf_token = elem.get_attribute("content")
