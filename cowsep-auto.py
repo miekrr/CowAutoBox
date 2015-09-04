@@ -74,6 +74,15 @@ class PythonOrgSearch(unittest.TestCase):
             self.itemsDeldata = f.readlines()
 
 
+    def test_delete_weak_items(self):
+        self.readItemsToDelete()
+        time.sleep(1)
+        for item in self.itemsDeldata:
+            data = item.split(' ', 1 )
+            self.recycle_item(data[0], data[1])
+            time.sleep(0.3)
+
+
     def tearDown(self):
         #self.driver.close()
         print("bye!")
