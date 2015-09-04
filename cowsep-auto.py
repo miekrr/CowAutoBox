@@ -69,6 +69,11 @@ class PythonOrgSearch(unittest.TestCase):
         csrf_token = elem.get_attribute("content")
         return csrf_token
 
+    def readItemsToDelete(self):
+         with open ("ids-to-delete.txt", "r") as f:
+            self.itemsDeldata = f.readlines()
+
+
     def tearDown(self):
         #self.driver.close()
         print("bye!")
