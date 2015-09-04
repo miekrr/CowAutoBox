@@ -21,6 +21,12 @@ class PythonOrgSearch(unittest.TestCase):
             return True
         return False
 
+    def recycle_item(self, item_id, item):
+        link = COWSEP_WEBSITE + "/recycle.php?item=" + item_id + "&item_id=" + item
+        print(link)
+        self.driver.get(link)
+        #return self.get_status(body)
+
     def open_box(self, item_name, csrf_token):
         link = COWSEP_WEBSITE + "/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
         print(link)
