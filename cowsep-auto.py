@@ -83,22 +83,24 @@ class PythonOrgSearch(unittest.TestCase):
 
 
     def readItemsToDelete(self):
-         with open ("ids-to-delete.txt", "r") as f:
+         with open (IDS_TO_BE_DELETED_FILENAME, "r") as f:
             self.itemsDeldata = f.readlines()
 
 
-    def test_delete_weak_items(self):
+    def _test_delete_weak_items(self):
+        with open(EXTERNAL_HTML_SAVE, 'a') as html_source:
+            html_source.write(self.driver.page_source)
+        self.filter_items()
         self.readItemsToDelete()
-        time.sleep(1)
+
         for item in self.itemsDeldata:
             data = item.split(' ', 1 )
             self.recycle_item(data[0], data[1])
-            time.sleep(0.3)
+            time.sleep(0.3) ## do not overload server
 
 
     def tearDown(self):
-        #self.driver.close()
-        print("bye!")
+        self.driver.close() ## comment line to keep browser window open
 
 
 if __name__ == "__main__":
