@@ -6,14 +6,21 @@ import json
 
 TWITCH_USER = "user"
 TWITCH_PASS = "pass"
+
 COWSEP_WEBSITE = "http://www.cowsep.com"
-EXTERNAL_HTML_SAVE = "D:\SourceCode\cow-auto"
+EXTERNAL_HTML_SAVE = "D:\SourceCode\cow-auto\html-data.html"
+IDS_TO_BE_DELETED_FILENAME = "ids-to-delete.txt"
+SORTER_EXECUTABLE = "cow-sorter.jar"
 
 class PythonOrgSearch(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.do_twitch_login_for_cowsep()
+
+
+    def filter_items(self):
+        subprocess.call(["java", "-jar", SORTER_EXECUTABLE, EXTERNAL_HTML_SAVE, IDS_TO_BE_DELETED_FILENAME])
 
 
     def get_status(self, json_data):
@@ -54,9 +61,6 @@ class PythonOrgSearch(unittest.TestCase):
         pass_box.send_keys(TWITCH_PASS)
         pass_box.send_keys(Keys.RETURN)
         time.sleep(2)
-
-        with open(EXTERNAL_HTML_SAVE, 'a') as html_source:
-            html_source.write(driver.page_source)
 
 
     def test_open_boxes(self):
