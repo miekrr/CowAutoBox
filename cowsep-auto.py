@@ -7,12 +7,14 @@ import json
 TWITCH_USER = "user"
 TWITCH_PASS = "pass"
 COWSEP_WEBSITE = "http://www.cowsep.com"
+EXTERNAL_HTML_SAVE = "D:\SourceCode\cow-auto"
 
 class PythonOrgSearch(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.do_twitch_login_for_cowsep()
+
 
     def get_status(self, json_data):
         print(json_data)
@@ -21,11 +23,13 @@ class PythonOrgSearch(unittest.TestCase):
             return True
         return False
 
+
     def recycle_item(self, item_id, item):
         link = COWSEP_WEBSITE + "/recycle.php?item=" + item_id + "&item_id=" + item
         print(link)
         self.driver.get(link)
         #return self.get_status(body)
+
 
     def open_box(self, item_name, csrf_token):
         link = COWSEP_WEBSITE + "/crates.php?crate=" + item_name + "&csrf_token=" + csrf_token
@@ -34,6 +38,7 @@ class PythonOrgSearch(unittest.TestCase):
         body = self.driver.find_element_by_xpath("/html/body").text
 
         return self.get_status(body)
+
 
     def do_twitch_login_for_cowsep(self):
         driver = self.driver
@@ -48,8 +53,11 @@ class PythonOrgSearch(unittest.TestCase):
         pass_box = driver.find_element_by_name("password")
         pass_box.send_keys(TWITCH_PASS)
         pass_box.send_keys(Keys.RETURN)
-
         time.sleep(2)
+
+        with open(EXTERNAL_HTML_SAVE, 'a') as html_source:
+            html_source.write(driver.page_source)
+
 
     def test_open_boxes(self):
         boxes = { "bullbox", "death_chest", "cowchest2015" }
@@ -69,6 +77,7 @@ class PythonOrgSearch(unittest.TestCase):
         csrf_token = elem.get_attribute("content")
         return csrf_token
 
+
     def readItemsToDelete(self):
          with open ("ids-to-delete.txt", "r") as f:
             self.itemsDeldata = f.readlines()
@@ -86,6 +95,7 @@ class PythonOrgSearch(unittest.TestCase):
     def tearDown(self):
         #self.driver.close()
         print("bye!")
+
 
 if __name__ == "__main__":
     unittest.main()
